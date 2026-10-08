@@ -1,0 +1,48 @@
+rules_version = '2';
+
+// Regras de segurança do projeto Mapa de Locais.
+// - Tudo que não for a coleção "locais" é bloqueado.
+// - Leitura pública (é um guia de estabelecimentos).
+// - Cadastro e edição só são aceitos se o documento seguir o modelo Local:
+//   apenas campos conhecidos, tipos corretos e valores dentro de limites.
+// Próximo passo (extensão, nível 3): exigir request.auth para create/update/delete
+// e separar usuários comuns de administradores.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function textoValido(valor, maximo) {
+      return valor is string && valor.size() <= maximo;
+    }
+
+    function coordenadaValida(d, campo, limite) {
+      return !(campo in d) || d[campo] == null
+        || (d[campo] is number && d[campo] >= -limite && d[campo] <= limite);
+    }
+
+    function localValido(d) {
+      return d.keys().hasAll(['nome', 'categoria', 'cidade', 'avaliacao', 'distancia',
+                              'horario', 'descricao', 'favorito'])
+        && d.keys().hasOnly(['nome', 'categoria', 'cidade', 'avaliacao', 'distancia',
+                             'horario', 'descricao', 'favorito', 'endereco', 'telefone',
+                             'latitude', 'longitude'])
+        && textoValido(d.nome, 80) && d.nome.size() > 0
+        && d.categoria in ['Academia', 'Restaurante', 'Hospital', 'Farmácia', 'Mercado', 'Café']
+        && d.cidade in ['São Paulo', 'Campinas', 'Jundiaí']
+        && d.avaliacao is number && d.avaliacao >= 0 && d.avaliacao <= 5
+        && d.distancia is number && d.distancia >= 0 && d.distancia <= 500
+        && textoValido(d.horario, 20)
+        && textoValido(d.descricao, 500)
+        && d.favorito is bool
+        && (!('endereco' in d) || textoValido(d.endereco, 120))
+        && (!('telefone' in d) || textoValido(d.telefone, 20))
+        && coordenadaValida(d, 'latitude', 90)
+        && coordenadaValida(d, 'longitude', 180);
+    }
+
+    match /locais/{localId} {
+      allow read: if true;
+      allow create, update: if localValido(request.resource.data);
+      allow delete: if true;
+    }
+  }
+}
