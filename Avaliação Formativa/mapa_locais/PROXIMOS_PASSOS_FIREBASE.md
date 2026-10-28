@@ -11,6 +11,22 @@
 | `lib/firebase_options.dart` | ⏳ **Provisório** — falta gerar com o FlutterFire |
 | 10+ locais cadastrados no Firestore | ⏳ Falta popular o banco real |
 | Print do Console do Firestore | ⏳ Falta tirar |
+| **Documentação técnica (exigida pelo professor)** | ⏳ Falta gerar — ver abaixo |
+
+### 📌 Documentação técnica — exigência do professor
+
+Além do `README.md`, o professor pediu uma **documentação técnica** do projeto que explique:
+
+- **Funcionalidades:** o que cada tela faz (mapa, resultados, detalhes), o fluxo de uso e as
+  ações (pesquisar, filtrar, cadastrar, editar, excluir, favoritar, ver no mapa, ligar, rotas).
+- **Conexões:** como o app se conecta ao Firebase (`firebase_core`, `firebase_options.dart`,
+  `google-services.json`), como lê e grava no Cloud Firestore (coleção `locais`, `snapshots()`
+  em tempo real, CRUD), regras de segurança, mapa (OpenStreetMap) e integrações com o
+  Android (discador e Google Maps).
+- **Funcionamento interno:** arquitetura em camadas, modelo de dados, testes e como executar.
+
+Ela será gerada (Word/PDF) **depois** de ligar o Firebase real, para incluir o ID do projeto,
+o print do Console do Firestore e os testes executados no banco em nuvem.
 
 Até agora o app foi testado com o **emulador local do Firestore** (um banco que roda no
 computador). Enquanto os passos abaixo não forem feitos, um `flutter run` normal **não carrega
@@ -111,6 +127,11 @@ git add .
 git commit -m "Configura Firebase real (FlutterFire + regras + dados)"
 git push
 ```
+
+### 10. Gerar e entregar a documentação técnica
+
+Gerar o documento (Word/PDF) descrito em "Documentação técnica — exigência do professor",
+com os prints das telas e do Firestore, e enviá-lo também para o repositório (`docs/`).
 
 ---
 
