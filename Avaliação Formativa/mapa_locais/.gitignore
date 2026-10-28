@@ -53,3 +53,6 @@ app.*.map.json
 
 # Arquivos temporários do Microsoft Office
 ~$*
+
+# Gerador da documentação (dependências do Node)
+docs/gerador/node_modules/

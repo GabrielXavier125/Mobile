@@ -1,0 +1,6 @@
+{
+  "name": "gerador-documentacao-mapa-locais",
+  "private": true,
+  "description": "Gera docs/Documentacao_Tecnica_Mapa_de_Locais.docx (node gerar_doc.js .. ../Documentacao_Tecnica_Mapa_de_Locais.docx)",
+  "dependencies": { "docx": "^9.0.0" }
+}

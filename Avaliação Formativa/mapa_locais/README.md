@@ -28,14 +28,15 @@ poder ser alterados ou excluídos — portanto os dados não podem ficar fixos n
 ## 2. Objetivo da aplicação
 
 Oferecer um guia de estabelecimentos (academias, restaurantes, hospitais, farmácias, mercados e
-cafés) de São Paulo, Campinas e Jundiaí, com mapa real, pesquisa, filtros, detalhes e favoritos,
+cafés) com foco em **Limeira (SP)** — a cidade da turma — e também São Paulo, Campinas e Jundiaí
+(exigidas pelo enunciado), com mapa real, pesquisa, filtros, detalhes e favoritos,
 armazenando todos os dados na coleção `locais` do Cloud Firestore com operações completas de CRUD.
 
 ## 3. Requisitos funcionais
 
 | Código | Requisito | Como foi atendido |
 |---|---|---|
-| RF01 | Selecionar cidade | Seletor "Cidade selecionada" no mapa e filtro de cidade nos resultados (São Paulo, Campinas, Jundiaí e "Todas"). |
+| RF01 | Selecionar cidade | Seletor "Cidade selecionada" no mapa e filtro de cidade nos resultados (Limeira — cidade inicial —, São Paulo, Campinas, Jundiaí e "Todas"). |
 | RF02 | Pesquisar | Campo de pesquisa no mapa e nos resultados; busca por nome **ou** categoria, sem diferenciar maiúsculas e acentos. |
 | RF03 | Consultar Firestore | `LocalService.listarLocais()` usa `snapshots()` da coleção `locais` (atualização em tempo real). |
 | RF04 | Filtrar | Chips de categoria, filtro de cidade e filtro de favoritos na tela de resultados. |
@@ -116,15 +117,15 @@ exclusão usa AlertDialog, a aba **Favoritos** abre a tela de resultados já fil
 |---|---|---|---|
 | nome | String | sim | "Academia Fitness" |
 | categoria | String | sim | "Academia" |
-| cidade | String | sim | "São Paulo" |
+| cidade | String | sim | "Limeira" |
 | avaliacao | Number (0–5) | sim | 4.8 |
 | distancia | Number (km) | sim | 1.2 |
 | horario | String | sim | "06:00 - 22:00" |
 | descricao | String | sim | "Academia completa com musculação..." |
 | favorito | Boolean | sim | false |
-| endereco | String | não | "Rua Augusta, 1500 - Consolação" |
-| telefone | String | não | "(11) 3000-1001" |
-| latitude / longitude | Number | não | -23.5572 / -46.6620 |
+| endereco | String | não | "Rua Senador Vergueiro, 1100 - Centro" |
+| telefone | String | não | "(19) 3400-1003" |
+| latitude / longitude | Number | não | -22.5598 / -47.4066 |
 
 O ID de cada documento é gerado automaticamente pelo Firestore (`add()`) e guardado no campo
 `id` do Model para permitir edição, exclusão e favoritos. Os campos complementares
@@ -223,7 +224,8 @@ flutter test integration_test -d emulator-5554 --dart-define=USAR_EMULADOR=true
    não carrega).
 2. Na pasta do projeto: `flutter pub get` e `flutter run`.
 3. Se a coleção estiver vazia, a tela de resultados oferece o botão
-   **"Cadastrar locais de exemplo"** (20 locais, ao menos 5 por cidade).
+   **"Cadastrar locais de exemplo"** (20 locais fictícios: 10 em Limeira, 4 em Campinas, 3 em
+   Jundiaí e 3 em São Paulo).
 4. Para desenvolver sem internet/Firebase: `firebase emulators:start --only firestore --project demo-mapa-locais`
    e `flutter run --dart-define=USAR_EMULADOR=true`.
 

@@ -42,10 +42,10 @@ void main() {
 
   testWidgets('T01 — mapa mostra a cidade e os marcadores vindos do banco', (tester) async {
     await abrirApp(tester);
-    expect(find.text('São Paulo'), findsOneWidget);
+    expect(find.text('Limeira'), findsOneWidget, reason: 'o app abre em Limeira');
     expect(find.text('Buscar locais, endereços ou categorias...'), findsOneWidget);
-    expect(marcadores(), findsNWidgets(8));
-    expect(find.text('Ver resultados (8)'), findsOneWidget);
+    expect(marcadores(), findsNWidgets(10));
+    expect(find.text('Ver resultados (10)'), findsOneWidget);
   });
 
   testWidgets('T03 — selecionar Campinas troca os marcadores', (tester) async {
@@ -56,7 +56,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Campinas'), findsOneWidget);
-    expect(marcadores(), findsNWidgets(6));
+    expect(marcadores(), findsNWidgets(4));
   });
 
   testWidgets('T02/T04 — pesquisa e filtro por categoria nos resultados', (tester) async {
@@ -68,14 +68,14 @@ void main() {
     expect(find.text('Resultados'), findsOneWidget);
     expect(find.text('5 locais encontrados'), findsOneWidget);
     expect(find.text('Academia Fitness'), findsOneWidget);
-    expect(find.text('Cantina Bella Vista'), findsNothing);
+    expect(find.text('Restaurante Sabor da Laranja'), findsNothing);
 
     await tester.enterText(find.byKey(const Key('campo_pesquisa')), '');
     await tester.ensureVisible(find.text('Restaurantes'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Restaurantes'));
     await tester.pumpAndSettle();
-    expect(find.text('Cantina Bella Vista'), findsOneWidget);
+    expect(find.text('Restaurante Sabor da Laranja'), findsOneWidget);
     expect(find.text('Academia Fitness'), findsNothing);
   });
 
@@ -86,7 +86,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Sobre'), findsOneWidget);
-    expect(find.text('Rua Augusta, 1500 - Consolação'), findsOneWidget);
+    expect(find.text('Rua Senador Vergueiro, 1100 - Centro'), findsOneWidget);
     expect(find.text('Ver no mapa'), findsOneWidget);
 
     await tester.tap(find.byTooltip('Voltar'));
@@ -137,7 +137,7 @@ void main() {
     expect(find.textContaining('cadastrado com sucesso'), findsOneWidget);
     expect(find.text('Academia Teste'), findsOneWidget);
     final docs = await firestore.collection('locais').where('nome', isEqualTo: 'Academia Teste').get();
-    expect(docs.docs.single.data()['cidade'], 'São Paulo');
+    expect(docs.docs.single.data()['cidade'], 'Limeira');
     expect(docs.docs.single.data()['latitude'], isNotNull);
   });
 

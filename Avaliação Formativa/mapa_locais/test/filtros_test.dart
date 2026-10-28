@@ -29,19 +29,20 @@ void main() {
 
     test('T04 — filtro por categoria', () {
       final r = filtrarLocais(locais, '', 'Todas', 'Hospital');
-      expect(r.length, 3);
+      expect(r.length, 2);
       expect(r.every((l) => l.categoria == 'Hospital'), isTrue);
     });
 
     test('combina cidade, categoria e favoritos', () {
-      expect(filtrarLocais(locais, '', 'Jundiaí', 'Academia').length, 2);
+      expect(filtrarLocais(locais, '', 'Limeira', 'Academia').length, 5);
+      expect(filtrarLocais(locais, '', 'Jundiaí', 'Academia').length, 1);
       final favoritos = filtrarLocais(locais, '', 'Todas', 'Todos', apenasFavoritos: true);
       expect(favoritos.every((l) => l.favorito), isTrue);
       expect(favoritos, isNotEmpty);
     });
 
     test('ordena do mais próximo para o mais distante', () {
-      final r = filtrarLocais(locais, '', 'São Paulo', 'Todos');
+      final r = filtrarLocais(locais, '', 'Limeira', 'Todos');
       final distancias = r.map((l) => l.distancia).toList();
       expect(distancias, [...distancias]..sort());
     });
@@ -53,10 +54,12 @@ void main() {
   });
 
   group('dados de exemplo', () {
-    test('ao menos 10 locais e 5 por cidade (marcadores no mapa)', () {
+    test('ao menos 10 locais, 5+ na cidade principal e todas as cidades com locais', () {
       expect(locaisExemplo.length, greaterThanOrEqualTo(10));
-      for (final cidade in ['São Paulo', 'Campinas', 'Jundiaí']) {
-        expect(locaisExemplo.where((l) => l.cidade == cidade).length, greaterThanOrEqualTo(5));
+      expect(locaisExemplo.where((l) => l.cidade == 'Limeira').length, greaterThanOrEqualTo(5),
+          reason: 'a tela inicial (Limeira) precisa de ao menos 5 marcadores');
+      for (final cidade in ['Limeira', 'São Paulo', 'Campinas', 'Jundiaí']) {
+        expect(locaisExemplo.where((l) => l.cidade == cidade), isNotEmpty);
       }
       expect(locaisExemplo.every((l) => horarioValido(l.horario)), isTrue);
     });

@@ -27,7 +27,7 @@ service cloud.firestore {
                              'latitude', 'longitude'])
         && textoValido(d.nome, 80) && d.nome.size() > 0
         && d.categoria in ['Academia', 'Restaurante', 'Hospital', 'Farmácia', 'Mercado', 'Café']
-        && d.cidade in ['São Paulo', 'Campinas', 'Jundiaí']
+        && d.cidade in ['Limeira', 'São Paulo', 'Campinas', 'Jundiaí']
         && d.avaliacao is number && d.avaliacao >= 0 && d.avaliacao <= 5
         && d.distancia is number && d.distancia >= 0 && d.distancia <= 500
         && textoValido(d.horario, 20)
