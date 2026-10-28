@@ -50,3 +50,6 @@ app.*.map.json
 # Firebase CLI (cache de deploy e logs dos emuladores)
 .firebase/
 *-debug.log
+
+# Arquivos temporários do Microsoft Office
+~$*
