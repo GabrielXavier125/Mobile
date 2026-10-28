@@ -11,7 +11,7 @@
 | Regras de segurança publicadas | ✅ Publicadas e testadas (dado inválido → 403) |
 | 10+ locais cadastrados no Firestore | ✅ 20 locais |
 | Testes no Firestore real (integração T01–T10 + 31 unidade/widget) | ✅ Passando no Pixel 8 |
-| **Print do Console do Firestore** | ⏳ **Falta** |
+| Print do Console do Firestore | ✅ `docs/prints/firestore_console.png` |
 | **Documentação técnica (exigida pelo professor)** | ⏳ **Falta** |
 
 ## 📌 Documentação técnica — exigência do professor
@@ -30,12 +30,7 @@ Além do `README.md`, o professor pediu uma **documentação técnica** do proje
 
 ## O que falta fazer
 
-### 1. Print do Console do Firestore
-
-1. Abrir <https://console.firebase.google.com/project/mapa-locais-gabriel/firestore> logado com
-   o **Gmail pessoal** (a conta `@aluno.senai.br` não tem acesso ao projeto).
-2. Clicar na coleção `locais` para mostrar os documentos e campos.
-3. Salvar o print como `docs/prints/firestore_console.png`.
+### 1. ~~Print do Console do Firestore~~ ✅ feito
 
 ### 2. Gerar a documentação técnica (Word/PDF)
 

@@ -7,8 +7,8 @@ Desenvolvimento de Aplicação Mobile com Flutter.
 **Projeto Firebase:** `mapa-locais-gabriel` · Cloud Firestore (região `nam5`) · coleção `locais`
 com 20 documentos.
 
-> ⏳ **Falta para a entrega:** print do Console do Firestore e a documentação técnica pedida pelo
-> professor — ver **[PROXIMOS_PASSOS_FIREBASE.md](PROXIMOS_PASSOS_FIREBASE.md)**.
+> ⏳ **Falta para a entrega:** a documentação técnica pedida pelo professor — ver
+> **[PROXIMOS_PASSOS_FIREBASE.md](PROXIMOS_PASSOS_FIREBASE.md)**.
 
 | Tela 1 — Mapa principal | Tela 2 — Resultados | Tela 3 — Detalhes |
 |---|---|---|
@@ -211,8 +211,9 @@ flutter test integration_test -d emulator-5554 --dart-define=USAR_EMULADOR=true
 |---|---|
 | ![Cadastro](docs/prints/cadastro_formulario.png) | ![Exclusão](docs/prints/exclusao_confirmacao.png) |
 
-**Print do Firestore:** ⏳ pendente — salvar em `docs/prints/firestore_console.png` (Console do
-Firebase → Firestore Database → coleção `locais`).
+### Firestore — coleção `locais` no Console do Firebase
+
+![Console do Firestore](docs/prints/firestore_console.png)
 
 ## 12. Como executar o projeto
 
