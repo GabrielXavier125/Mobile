@@ -12,7 +12,7 @@
 | 10+ locais cadastrados no Firestore | ✅ 20 locais |
 | Testes no Firestore real (integração T01–T10 + 31 unidade/widget) | ✅ Passando no Pixel 8 |
 | Print do Console do Firestore | ✅ `docs/prints/firestore_console.png` |
-| **Documentação técnica (exigida pelo professor)** | ⏳ **Falta** |
+| Documentação técnica (exigida pelo professor) | ✅ `docs/Documentacao_Tecnica_Mapa_de_Locais.pdf` / `.docx` |
 
 ## 📌 Documentação técnica — exigência do professor
 
@@ -32,20 +32,11 @@ Além do `README.md`, o professor pediu uma **documentação técnica** do proje
 
 ### 1. ~~Print do Console do Firestore~~ ✅ feito
 
-### 2. Gerar a documentação técnica (Word/PDF)
+### 2. ~~Gerar a documentação técnica~~ ✅ feito (`docs/`, 24 páginas)
 
-Com o print do Firestore e as capturas das telas, gerar o documento descrito acima e salvá-lo em
-`docs/`.
+### 3. ~~Enviar para o GitHub~~ ✅ feito
 
-### 3. Enviar para o GitHub
-
-```bash
-git add .
-git commit -m "Adiciona print do Firestore e documentação técnica"
-git push
-```
-
-### 4. Preparar a apresentação
+### 4. Preparar a apresentação (falta)
 
 - Abrir o emulador com `iniciar_emulador.bat` antes de apresentar (sem ele, nesta rede o
   emulador fica sem internet).

@@ -7,8 +7,9 @@ Desenvolvimento de Aplicação Mobile com Flutter.
 **Projeto Firebase:** `mapa-locais-gabriel` · Cloud Firestore (região `nam5`) · coleção `locais`
 com 20 documentos.
 
-> ⏳ **Falta para a entrega:** a documentação técnica pedida pelo professor — ver
-> **[PROXIMOS_PASSOS_FIREBASE.md](PROXIMOS_PASSOS_FIREBASE.md)**.
+📄 **Documentação técnica** (funcionalidades, conexões e funcionamento):
+[PDF](docs/Documentacao_Tecnica_Mapa_de_Locais.pdf) ·
+[Word](docs/Documentacao_Tecnica_Mapa_de_Locais.docx)
 
 | Tela 1 — Mapa principal | Tela 2 — Resultados | Tela 3 — Detalhes |
 |---|---|---|
