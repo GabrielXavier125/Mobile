@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "437495777585",
+    "project_id": "mapa-locais-gabriel",
+    "storage_bucket": "mapa-locais-gabriel.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:437495777585:android:c9e4475245b180a3108810",
+        "android_client_info": {
+          "package_name": "com.exemplo.mapa_locais"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDoHpUuI0vpHFiD14Go-mK2cELE5L4g_as"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

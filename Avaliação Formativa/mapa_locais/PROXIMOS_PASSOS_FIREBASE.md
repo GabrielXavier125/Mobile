@@ -1,19 +1,20 @@
-# ⚠️ O que ainda falta: ligar o app ao Firebase real
+# Pendências para concluir a Avaliação Formativa
 
-## Situação atual
+## Situação atual (28/10/2026)
 
 | Item | Status |
 |---|---|
 | Telas, CRUD, pesquisa, filtros, favoritos, navegação | ✅ Prontos |
-| Testes automatizados (31 de unidade/widget + integração T01–T10) | ✅ Passando |
-| Regras de segurança (`firestore.rules`) | ✅ Escritas e validadas no **emulador local** — ⏳ falta publicar |
-| Projeto no Firebase / banco Cloud Firestore | ⏳ **Falta criar** |
-| `lib/firebase_options.dart` | ⏳ **Provisório** — falta gerar com o FlutterFire |
-| 10+ locais cadastrados no Firestore | ⏳ Falta popular o banco real |
-| Print do Console do Firestore | ⏳ Falta tirar |
-| **Documentação técnica (exigida pelo professor)** | ⏳ Falta gerar — ver abaixo |
+| Projeto Firebase `mapa-locais-gabriel` (conta Gmail pessoal) | ✅ Criado |
+| Cloud Firestore (região `nam5`) + coleção `locais` | ✅ Criado |
+| `flutterfire configure` (`firebase_options.dart`, `google-services.json`) | ✅ Feito |
+| Regras de segurança publicadas | ✅ Publicadas e testadas (dado inválido → 403) |
+| 10+ locais cadastrados no Firestore | ✅ 20 locais |
+| Testes no Firestore real (integração T01–T10 + 31 unidade/widget) | ✅ Passando no Pixel 8 |
+| **Print do Console do Firestore** | ⏳ **Falta** |
+| **Documentação técnica (exigida pelo professor)** | ⏳ **Falta** |
 
-### 📌 Documentação técnica — exigência do professor
+## 📌 Documentação técnica — exigência do professor
 
 Além do `README.md`, o professor pediu uma **documentação técnica** do projeto que explique:
 
@@ -25,130 +26,60 @@ Além do `README.md`, o professor pediu uma **documentação técnica** do proje
   Android (discador e Google Maps).
 - **Funcionamento interno:** arquitetura em camadas, modelo de dados, testes e como executar.
 
-Ela será gerada (Word/PDF) **depois** de ligar o Firebase real, para incluir o ID do projeto,
-o print do Console do Firestore e os testes executados no banco em nuvem.
-
-Até agora o app foi testado com o **emulador local do Firestore** (um banco que roda no
-computador). Enquanto os passos abaixo não forem feitos, um `flutter run` normal **não carrega
-dados**, porque `firebase_options.dart` aponta para um projeto de demonstração
-(`demo-mapa-locais`).
-
 ---
 
-## Passo a passo (cerca de 10 minutos)
+## O que falta fazer
 
-Todos os comandos são executados **dentro da pasta `mapa_locais`**.
+### 1. Print do Console do Firestore
 
-### 1. Fazer login no Firebase CLI
+1. Abrir <https://console.firebase.google.com/project/mapa-locais-gabriel/firestore> logado com
+   o **Gmail pessoal** (a conta `@aluno.senai.br` não tem acesso ao projeto).
+2. Clicar na coleção `locais` para mostrar os documentos e campos.
+3. Salvar o print como `docs/prints/firestore_console.png`.
 
-```bash
-firebase login
-```
+### 2. Gerar a documentação técnica (Word/PDF)
 
-O comando mostra um link e um código de sessão. Abra o link, entre com sua conta Google,
-copie o **código de autorização** exibido e finalize com:
+Com o print do Firestore e as capturas das telas, gerar o documento descrito acima e salvá-lo em
+`docs/`.
 
-```bash
-firebase login SEU_CODIGO
-```
-
-Confira com `firebase login:list`.
-
-### 2. Criar o projeto no Firebase
-
-Pelo Console (como no tutorial, item 9.2): <https://console.firebase.google.com> →
-**Adicionar projeto** → nome `mapa-locais-flutter` → concluir.
-
-Ou pelo terminal (o ID precisa ser único no mundo):
-
-```bash
-firebase projects:create mapa-locais-gabriel --display-name "Mapa Locais Flutter"
-```
-
-### 3. Criar o banco Cloud Firestore
-
-Console → **Firestore Database** → **Criar banco de dados** → local
-**`southamerica-east1` (São Paulo)** → **modo de produção** (as regras do projeto serão
-publicadas no passo 5).
-
-Ou pelo terminal:
-
-```bash
-firebase firestore:databases:create "(default)" --location=southamerica-east1 --project SEU_PROJECT_ID
-```
-
-### 4. Configurar o Flutter com o FlutterFire CLI
-
-```bash
-flutterfire configure --project=SEU_PROJECT_ID --platforms=android
-```
-
-Isso **substitui** `lib/firebase_options.dart` pelo arquivo real e cria
-`android/app/google-services.json`. Não edite esses arquivos à mão.
-
-> Se aparecer "flutterfire não é reconhecido", use
-> `dart pub global run flutterfire_cli:flutterfire configure ...` ou adicione
-> `%LOCALAPPDATA%\Pub\Cache\bin` ao PATH.
-
-### 5. Publicar as regras de segurança
-
-```bash
-firebase deploy --only firestore:rules,firestore:indexes --project SEU_PROJECT_ID
-```
-
-### 6. Popular o banco (mínimo de 10 locais)
-
-```bash
-flutter run
-```
-
-No app: **Ver resultados** → **Cadastrar locais de exemplo**. Isso cadastra 20 locais
-(São Paulo, Campinas e Jundiaí).
-
-### 7. Rodar os testes no banco real
-
-```bash
-flutter test
-flutter test integration_test -d emulator-5554
-```
-
-O teste de integração cria, edita, favorita e exclui um local próprio, sem mexer nos outros.
-
-### 8. Tirar o print do Firestore e atualizar a documentação
-
-1. Console → Firestore Database → coleção `locais` → salvar o print como
-   `docs/prints/firestore_console.png`.
-2. No `README.md`, atualizar a seção 10 (testes executados no banco real) e a seção 11 (print).
-
-### 9. Enviar para o GitHub
+### 3. Enviar para o GitHub
 
 ```bash
 git add .
-git commit -m "Configura Firebase real (FlutterFire + regras + dados)"
+git commit -m "Adiciona print do Firestore e documentação técnica"
 git push
 ```
 
-### 10. Gerar e entregar a documentação técnica
+### 4. Preparar a apresentação
 
-Gerar o documento (Word/PDF) descrito em "Documentação técnica — exigência do professor",
-com os prints das telas e do Firestore, e enviá-lo também para o repositório (`docs/`).
+- Abrir o emulador com `iniciar_emulador.bat` antes de apresentar (sem ele, nesta rede o
+  emulador fica sem internet).
+- Revisar `lib/services/local_service.dart` (CRUD) e `firestore.rules` (segurança).
 
 ---
+
+## Como o Firebase foi configurado (referência)
+
+```bash
+firebase login                                   # Gmail pessoal (contas da escola não podem criar projetos)
+firebase projects:create mapa-locais-gabriel     # + aceite dos termos no Console
+firebase deploy --only firestore:rules --project mapa-locais-gabriel   # ativou a API, criou o banco e publicou as regras
+flutterfire configure --project=mapa-locais-gabriel --platforms=android
+```
+
+Os dados foram cadastrados pelo próprio app (Resultados → "Cadastrar locais de exemplo").
 
 ## Desenvolver sem o Firebase real (emulador local)
 
 ```bash
-# terminal 1 — banco local (precisa do Java do Android Studio no PATH)
 firebase emulators:start --only firestore --project demo-mapa-locais
-
-# terminal 2 — app apontando para o emulador
 flutter run --dart-define=USAR_EMULADOR=true
 ```
 
-Depois que o `flutterfire configure` substituir o `firebase_options.dart`, o modo emulador
-continua funcionando só com a flag `USAR_EMULADOR=true`.
+## Dicas
 
-## Dica: emulador sem internet
-
-Em redes de escola/empresa o emulador Android pode ficar sem internet (o mapa fica cinza).
-Abra-o com `iniciar_emulador.bat`: ele escolhe servidores DNS que funcionam na rede atual.
+- **Emulador sem internet:** use `iniciar_emulador.bat` (escolhe servidores DNS que funcionam).
+- **Acentos no caminho:** use `dart analyze` em vez de `flutter analyze` nesta pasta;
+  `android/gradle.properties` já tem `android.overridePathCheck=true`.
+- **Comando `firebase` não encontrado:** feche e reabra o VS Code (o PATH foi atualizado) ou use
+  `& "$env:APPDATA\npm\firebase.cmd"`.

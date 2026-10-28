@@ -4,10 +4,11 @@ Aplicação mobile de localização de estabelecimentos (mapa, pesquisa, resulta
 desenvolvida em Flutter com Firebase Cloud Firestore para a Avaliação Formativa de
 Desenvolvimento de Aplicação Mobile com Flutter.
 
-> ⚠️ **Pendente:** o app está pronto e testado com o emulador local do Firestore, mas ainda
-> precisa ser ligado ao projeto Firebase real (criar projeto, `flutterfire configure`, publicar
-> regras e popular o banco). Veja o passo a passo em
-> **[PROXIMOS_PASSOS_FIREBASE.md](PROXIMOS_PASSOS_FIREBASE.md)**.
+**Projeto Firebase:** `mapa-locais-gabriel` · Cloud Firestore (região `nam5`) · coleção `locais`
+com 20 documentos.
+
+> ⏳ **Falta para a entrega:** print do Console do Firestore e a documentação técnica pedida pelo
+> professor — ver **[PROXIMOS_PASSOS_FIREBASE.md](PROXIMOS_PASSOS_FIREBASE.md)**.
 
 | Tela 1 — Mapa principal | Tela 2 — Resultados | Tela 3 — Detalhes |
 |---|---|---|
@@ -145,8 +146,8 @@ aparece na hora em todas as telas, sem recarregar. Pesquisa e filtros são aplic
 
 ## 9. Regras de segurança
 
-O banco **não** fica aberto. O arquivo [`firestore.rules`](firestore.rules) é publicado no
-projeto com `firebase deploy --only firestore:rules`:
+O banco **não** fica aberto. O arquivo [`firestore.rules`](firestore.rules) está publicado no
+projeto `mapa-locais-gabriel` (`firebase deploy --only firestore:rules`):
 
 - tudo fora da coleção `locais` é **negado**;
 - leitura de `locais` é pública (é um guia de estabelecimentos);
@@ -156,7 +157,12 @@ projeto com `firebase deploy --only firestore:rules`:
 
 Validação feita contra o emulador do Firestore: documento válido → **200**; avaliação 9, campo
 extra (`admin`), cidade fora da lista, documento sem `nome`, escrita/leitura em outra coleção →
-**403 PERMISSION_DENIED**.
+**403 PERMISSION_DENIED**. No projeto real, uma gravação com campo fora do modelo também
+retornou **403**.
+
+> A `apiKey` em `lib/firebase_options.dart` e `google-services.json` **não é senha**: ela só
+> identifica o projeto Firebase e pode ficar no repositório. Quem protege os dados são as regras
+> acima.
 
 > Próximo passo (desafio nível 3): exigir autenticação (`request.auth`) para cadastro, edição e
 > exclusão, separando usuários comuns de administradores.
@@ -165,9 +171,9 @@ extra (`admin`), cidade fora da lista, documento sem `nome`, escrita/leitura em 
 
 ### Testes obrigatórios
 
-> Resultados obtidos no emulador Android (Pixel 8, Android 16) com o **emulador local do
-> Firestore**. Após ligar o Firebase real, repetir `flutter test integration_test` para
-> confirmar no banco em nuvem.
+> Executados em 28/10/2026 no emulador Android **Pixel 8 (Android 16)** conectado ao
+> **Cloud Firestore real** (`mapa-locais-gabriel`): teste de integração T01–T10 e 31 testes de
+> unidade/widget — todos passaram.
 
 | ID | Teste | Procedimento | Resultado | Evidência automatizada |
 |---|---|---|---|---|
@@ -206,19 +212,23 @@ flutter test integration_test -d emulator-5554 --dart-define=USAR_EMULADOR=true
 | ![Cadastro](docs/prints/cadastro_formulario.png) | ![Exclusão](docs/prints/exclusao_confirmacao.png) |
 
 **Print do Firestore:** ⏳ pendente — salvar em `docs/prints/firestore_console.png` (Console do
-Firebase → Firestore Database → coleção `locais`) depois de ligar o projeto real.
+Firebase → Firestore Database → coleção `locais`).
 
 ## 12. Como executar o projeto
 
 1. Abrir o emulador: dê dois cliques em `iniciar_emulador.bat` (ele escolhe servidores DNS que
    funcionam na rede atual — sem isso, em algumas redes o emulador fica sem internet e o mapa
    não carrega).
-2. Na pasta do projeto: `flutter pub get` e `flutter run`
-   (antes, configure o Firebase — ver [PROXIMOS_PASSOS_FIREBASE.md](PROXIMOS_PASSOS_FIREBASE.md)).
+2. Na pasta do projeto: `flutter pub get` e `flutter run`.
 3. Se a coleção estiver vazia, a tela de resultados oferece o botão
    **"Cadastrar locais de exemplo"** (20 locais, ao menos 5 por cidade).
 4. Para desenvolver sem internet/Firebase: `firebase emulators:start --only firestore --project demo-mapa-locais`
    e `flutter run --dart-define=USAR_EMULADOR=true`.
+
+**Observação — acentos no caminho:** o projeto fica em `Avaliação Formativa/`. Por isso
+`android/gradle.properties` tem `android.overridePathCheck=true` (o plugin Android recusa
+caminhos com acentos no Windows) e a análise de código deve ser feita com **`dart analyze`** — o
+comando `flutter analyze` falha com caminhos acentuados.
 
 ## 13. Desafios extras
 

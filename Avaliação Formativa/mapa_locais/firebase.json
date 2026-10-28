@@ -11,5 +11,24 @@
     "ui": {
       "enabled": false
     }
+  },
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "mapa-locais-gabriel",
+          "appId": "1:437495777585:android:c9e4475245b180a3108810",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "mapa-locais-gabriel",
+          "configurations": {
+            "android": "1:437495777585:android:c9e4475245b180a3108810"
+          }
+        }
+      }
+    }
   }
 }
