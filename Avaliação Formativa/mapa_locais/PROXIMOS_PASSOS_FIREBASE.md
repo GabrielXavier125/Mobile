@@ -10,7 +10,7 @@
 | `flutterfire configure` (`firebase_options.dart`, `google-services.json`) | ✅ Feito |
 | Regras de segurança publicadas | ✅ Publicadas e testadas (dado inválido → 403) |
 | 10+ locais cadastrados no Firestore | ✅ 20 locais |
-| Testes no Firestore real (integração T01–T10 + 31 unidade/widget) | ✅ Passando no Pixel 8 |
+| Testes no Firestore real (integração T01–T10 + 32 unidade/widget) | ✅ Passando no Pixel 8 |
 | Print do Console do Firestore | ✅ `docs/prints/firestore_console.png` |
 | Documentação técnica (exigida pelo professor) | ✅ `docs/Documentacao_Tecnica_Mapa_de_Locais.pdf` / `.docx` |
 

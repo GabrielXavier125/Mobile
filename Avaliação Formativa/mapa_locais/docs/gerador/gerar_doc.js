@@ -431,11 +431,11 @@ const s6 = [
     ['Unidade', '`test/local_test.dart`', '3', 'Conversões do Model (`fromMap`, `toMap`, valores padrão).'],
     ['Unidade', '`test/filtros_test.dart`', '10', 'Pesquisa, filtros, ordenação, dados de exemplo, horário aberto/fechado.'],
     ['Unidade', '`test/local_service_test.dart`', '6', 'CRUD do `LocalService` contra um Firestore em memória.'],
-    ['Widget', '`test/widget_test.dart`', '12', 'Fluxos das telas (T01–T11) com Firestore em memória.'],
+    ['Widget', '`test/widget_test.dart`', '13', 'Fluxos das telas (T01–T11) e seletor de estilo do mapa, com Firestore em memória.'],
     ['Integração', '`integration_test/app_test.dart`', '1', 'Fluxo completo no emulador Android, no **Firestore real**: pesquisa, cidade, filtro, cadastro, leitura, favorito, edição e exclusão.'],
   ], [1300, 2900, 800, 4071]),
   espaco(),
-  p('**Resultado (28/10/2026):** os 31 testes de unidade e de widget e o teste de integração passaram no emulador **Pixel 8 (Android 16)** conectado ao projeto `mapa-locais-gabriel`. O teste de integração cria, edita, favorita e exclui um local próprio, sem alterar os outros documentos.'),
+  p('**Resultado (28/10/2026):** os 32 testes de unidade e de widget e o teste de integração passaram no emulador **Pixel 8 (Android 16)** conectado ao projeto `mapa-locais-gabriel`. O teste de integração cria, edita, favorita e exclui um local próprio, sem alterar os outros documentos.'),
   h2('6.2 Testes obrigatórios'),
   tabela(['ID', 'Teste', 'Procedimento', 'Resultado'], [
     ['T01', 'Conexão', 'Abrir o app e verificar se os dados do Firestore aparecem', 'Passou'],
@@ -453,7 +453,7 @@ const s6 = [
   espaco(),
   p('T01 a T10 são cobertos pelo teste de integração no Firestore real e pelos testes de widget. O T11 é verificado pelos testes de widget com um banco vazio (mensagem "Nenhum local cadastrado." e botão de exemplos) e com uma falha de conexão simulada (mensagem "Erro ao carregar os locais." e "Tentar novamente").'),
   h2('6.3 Evidência no Firestore'),
-  ...figura('prints/firestore_console.png', 600, 953, 1919, 'Figura 3 — Console do Firebase: coleção locais com os documentos e os campos de um local'),
+  ...figura('prints/firestore_console.png', 600, 948, 1919, 'Figura 3 — Console do Firebase: coleção locais com os documentos e os campos de um local'),
 ];
 
 const s7 = [
@@ -468,7 +468,7 @@ const s7 = [
   numero('Se a coleção estiver vazia, usar "Cadastrar locais de exemplo" na tela de resultados.', 2),
   h2('7.3 Comandos úteis'),
   ...codigo([
-    'flutter test                                    # 31 testes de unidade e widget',
+    'flutter test                                    # 32 testes de unidade e widget',
     'flutter test integration_test -d emulator-5554  # teste de ponta a ponta no Firestore real',
     'dart analyze                                    # análise estática do código',
     'firebase deploy --only firestore:rules          # publicar as regras de segurança',
@@ -498,7 +498,7 @@ const s8 = [
     ['Filtros aplicados em memória.', 'Consultas com `where()`/`orderBy()` e índices no Firestore (nível 4).'],
   ], [4300, 4771]),
   espaco(),
-  p('**Desafio extra implementado — nível 2 (mapa real):** o mapa usa o OpenStreetMap com marcadores posicionados pelas coordenadas de cada documento.'),
+  p('**Desafio extra implementado — nível 2 (mapa real):** o mapa usa o OpenStreetMap com três estilos (Suave, Colorido e Escuro) e marcadores coloridos por categoria, posicionados pelas coordenadas de cada documento.'),
   h2('8.3 Conclusão'),
   p('O aplicativo atende ao wireframe e aos requisitos da avaliação: três telas, dados no Cloud Firestore, pesquisa, filtros, CRUD completo, favoritos e navegação. A separação entre Model, serviço e telas deixou o código simples de manter e de testar, e o uso de `snapshots()` tornou a interface reativa: qualquer alteração no banco aparece imediatamente em todas as telas.'),
   p('O desenvolvimento por etapas — primeiro com o emulador local do Firestore e depois com o projeto real — permitiu validar as regras de segurança antes de publicá-las. O projeto também mostrou que um banco em nuvem precisa ser protegido: mesmo sem login, as regras impedem dados fora do modelo e o acesso a outras coleções. O próximo passo natural é a autenticação de usuários.'),

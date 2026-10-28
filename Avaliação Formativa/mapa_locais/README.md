@@ -174,7 +174,7 @@ retornou **403**.
 ### Testes obrigatórios
 
 > Executados em 28/10/2026 no emulador Android **Pixel 8 (Android 16)** conectado ao
-> **Cloud Firestore real** (`mapa-locais-gabriel`): teste de integração T01–T10 e 31 testes de
+> **Cloud Firestore real** (`mapa-locais-gabriel`): teste de integração T01–T10 e 32 testes de
 > unidade/widget — todos passaram.
 
 | ID | Teste | Procedimento | Resultado | Evidência automatizada |
@@ -194,7 +194,7 @@ retornou **403**.
 ### Como executar
 
 ```bash
-flutter test                                   # 31 testes de unidade e de widget
+flutter test                                   # 32 testes de unidade e de widget
 flutter test integration_test -d emulator-5554 # roda no emulador Android, no Firestore real
 # ou, contra o emulador local do Firestore:
 flutter test integration_test -d emulator-5554 --dart-define=USAR_EMULADOR=true
