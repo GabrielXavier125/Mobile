@@ -7,11 +7,17 @@ import 'screens/mapa_screen.dart';
 import 'services/local_service.dart';
 
 class MinhaAplicacao extends StatefulWidget {
-  const MinhaAplicacao({super.key, this.service, this.carregarTilesMapa = true});
+  const MinhaAplicacao({
+    super.key,
+    this.service,
+    this.carregarTilesMapa = true,
+    this.animarMapa = true,
+  });
 
   /// Permite injetar um serviço com Firestore falso nos testes.
   final LocalService? service;
   final bool carregarTilesMapa;
+  final bool animarMapa;
 
   @override
   State<MinhaAplicacao> createState() => _MinhaAplicacaoState();
@@ -41,6 +47,7 @@ class _MinhaAplicacaoState extends State<MinhaAplicacao> {
       service: _service,
       focoMapa: _focoMapa,
       carregarTilesMapa: widget.carregarTilesMapa,
+      animarMapa: widget.animarMapa,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Mapa de Locais',

@@ -28,7 +28,7 @@ void main() {
     tester.view.physicalSize = const Size(1080, 2400);
     tester.view.devicePixelRatio = 2.625;
     addTearDown(tester.view.reset);
-    await tester.pumpWidget(MinhaAplicacao(service: servico ?? service, carregarTilesMapa: false));
+    await tester.pumpWidget(MinhaAplicacao(service: servico ?? service, carregarTilesMapa: false, animarMapa: false));
     await tester.pumpAndSettle();
   }
 
@@ -229,5 +229,22 @@ void main() {
     await abrirResultados(tester);
     expect(find.text('Erro ao carregar os locais.'), findsOneWidget);
     expect(find.text('Tentar novamente'), findsOneWidget);
+  });
+
+  testWidgets('mapa tem zoom e seletor de estilo (Suave, Colorido, Escuro)', (tester) async {
+    await abrirApp(tester);
+    expect(find.byTooltip('Aproximar'), findsOneWidget);
+    expect(find.byTooltip('Afastar'), findsOneWidget);
+
+    await tester.tap(find.byTooltip('Alterar estilo do mapa'));
+    await tester.pumpAndSettle();
+    expect(find.text('Estilo do mapa'), findsOneWidget);
+    expect(find.text('Suave'), findsOneWidget);
+    expect(find.text('Colorido'), findsOneWidget);
+    expect(find.text('Escuro'), findsOneWidget);
+
+    await tester.tap(find.byKey(const ValueKey('estilo_escuro')));
+    await tester.pumpAndSettle();
+    expect(find.text('Estilo do mapa'), findsNothing, reason: 'o seletor fecha após a escolha');
   });
 }

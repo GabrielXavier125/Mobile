@@ -52,7 +52,7 @@ void main() {
   }
 
   testWidgets('T01–T10 no Firestore real', (tester) async {
-    await tester.pumpWidget(MinhaAplicacao(service: service));
+    await tester.pumpWidget(MinhaAplicacao(service: service, animarMapa: false));
 
     // T01 — Conexão: dados do Firestore aparecem no mapa.
     await esperar(tester, find.textContaining('Ver resultados ('));

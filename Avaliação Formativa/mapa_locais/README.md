@@ -213,6 +213,10 @@ flutter test integration_test -d emulator-5554 --dart-define=USAR_EMULADOR=true
 |---|---|
 | ![Cadastro](docs/prints/cadastro_formulario.png) | ![Exclusão](docs/prints/exclusao_confirmacao.png) |
 
+| Seletor de estilo do mapa | Mapa no estilo Escuro |
+|---|---|
+| ![Estilos](docs/prints/mapa_seletor_estilo.png) | ![Escuro](docs/prints/mapa_escuro.png) |
+
 ### Firestore — coleção `locais` no Console do Firebase
 
 ![Console do Firestore](docs/prints/firestore_console.png)
@@ -236,8 +240,10 @@ comando `flutter analyze` falha com caminhos acentuados.
 
 ## 13. Desafios extras
 
-- **Nível 2 — Mapa real:** mapa do OpenStreetMap (`flutter_map`) com marcadores posicionados
-  pelas coordenadas de cada local, posição do usuário, troca de estilo e "Ver no mapa".
+- **Nível 2 — Mapa real:** mapa do OpenStreetMap (`flutter_map`) com três estilos (**Suave**,
+  padrão; **Colorido**; **Escuro**/noturno — filtros de cor aplicados no aparelho), marcadores
+  na cor de cada categoria posicionados pelas coordenadas, posição do usuário pulsante, zoom e
+  "Ver no mapa".
 
 ## 14. Conclusão
 

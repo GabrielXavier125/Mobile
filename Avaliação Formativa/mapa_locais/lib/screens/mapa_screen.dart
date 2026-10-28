@@ -3,6 +3,7 @@ import 'package:flutter_map/flutter_map.dart';
 
 import '../app_scope.dart';
 import '../dialogs/seletor_cidade.dart';
+import '../dialogs/seletor_estilo_mapa.dart';
 import '../models/cidade.dart';
 import '../models/local.dart';
 import '../utils/coordenadas.dart';
@@ -28,7 +29,7 @@ class _MapaScreenState extends State<MapaScreen> {
 
   String _cidade = Cidade.lista.first.nome;
   String? _selecionadoId;
-  EstiloMapa _estilo = EstiloMapa.claro;
+  EstiloMapa _estilo = EstiloMapa.suave;
 
   AppScope? _scope;
   Stream<List<Local>>? _stream;
@@ -73,6 +74,16 @@ class _MapaScreenState extends State<MapaScreen> {
       _selecionadoId = null;
     });
     _mapController.move(Cidade.porNome(cidade).centro, 13.2);
+  }
+
+  void _zoom(double delta) {
+    final camera = _mapController.camera;
+    _mapController.move(camera.center, (camera.zoom + delta).clamp(4, 18).toDouble());
+  }
+
+  Future<void> _trocarEstilo() async {
+    final estilo = await selecionarEstiloMapa(context, atual: _estilo);
+    if (estilo != null && mounted) setState(() => _estilo = estilo);
   }
 
   void _abrirResultados() {
@@ -126,7 +137,26 @@ class _MapaScreenState extends State<MapaScreen> {
                         selecionado: selecionado,
                         estilo: _estilo,
                         carregarTiles: scope.carregarTilesMapa,
+                        animar: scope.animarMapa,
                         onSelecionar: (local) => setState(() => _selecionadoId = local?.id),
+                      ),
+                      // Sombra suave separando o cabeçalho do mapa
+                      const Positioned(
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        height: 14,
+                        child: IgnorePointer(
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [Color(0x26000000), Color(0x00000000)],
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
                       if (snapshot.connectionState == ConnectionState.waiting)
                         const LinearProgressIndicator(),
@@ -137,23 +167,35 @@ class _MapaScreenState extends State<MapaScreen> {
                         bottom: selecionado == null ? 104 : 170,
                         child: Column(
                           children: [
-                            _BotaoMapa(
-                              icone: Icons.my_location,
-                              dica: 'Minha localização',
-                              onPressed: () {
-                                setState(() => _selecionadoId = null);
-                                _mapController.move(Cidade.porNome(_cidade).centro, 14);
-                              },
+                            _GrupoBotoes(
+                              botoes: [
+                                _BotaoMapa(icone: Icons.add, dica: 'Aproximar', onPressed: () => _zoom(1)),
+                                _BotaoMapa(icone: Icons.remove, dica: 'Afastar', onPressed: () => _zoom(-1)),
+                              ],
                             ),
-                            const SizedBox(height: 12),
-                            _BotaoMapa(
-                              icone: Icons.layers_outlined,
-                              dica: 'Alterar estilo do mapa',
-                              onPressed: () => setState(() {
-                                _estilo = _estilo == EstiloMapa.claro
-                                    ? EstiloMapa.padrao
-                                    : EstiloMapa.claro;
-                              }),
+                            const SizedBox(height: 10),
+                            _GrupoBotoes(
+                              botoes: [
+                                _BotaoMapa(
+                                  icone: Icons.my_location,
+                                  dica: 'Minha localização',
+                                  cor: const Color(0xFF1A73E8),
+                                  onPressed: () {
+                                    setState(() => _selecionadoId = null);
+                                    _mapController.move(Cidade.porNome(_cidade).centro, 14);
+                                  },
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 10),
+                            _GrupoBotoes(
+                              botoes: [
+                                _BotaoMapa(
+                                  icone: Icons.layers_outlined,
+                                  dica: 'Alterar estilo do mapa',
+                                  onPressed: _trocarEstilo,
+                                ),
+                              ],
                             ),
                           ],
                         ),
@@ -266,20 +308,47 @@ class _Cabecalho extends StatelessWidget {
   }
 }
 
-class _BotaoMapa extends StatelessWidget {
-  const _BotaoMapa({required this.icone, required this.dica, required this.onPressed});
+/// Cartão branco arredondado que agrupa botões do mapa (ex.: + e −).
+class _GrupoBotoes extends StatelessWidget {
+  const _GrupoBotoes({required this.botoes});
 
-  final IconData icone;
-  final String dica;
-  final VoidCallback onPressed;
+  final List<Widget> botoes;
 
   @override
   Widget build(BuildContext context) {
     return Material(
       color: Colors.white,
-      shape: const CircleBorder(),
-      elevation: 3,
-      child: IconButton(tooltip: dica, icon: Icon(icone), onPressed: onPressed),
+      elevation: 4,
+      shadowColor: Colors.black38,
+      borderRadius: BorderRadius.circular(16),
+      clipBehavior: Clip.antiAlias,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          for (var i = 0; i < botoes.length; i++) ...[
+            if (i > 0) Container(width: 28, height: 1, color: Colors.grey.shade300),
+            botoes[i],
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _BotaoMapa extends StatelessWidget {
+  const _BotaoMapa({required this.icone, required this.dica, required this.onPressed, this.cor});
+
+  final IconData icone;
+  final String dica;
+  final VoidCallback onPressed;
+  final Color? cor;
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      tooltip: dica,
+      icon: Icon(icone, color: cor ?? const Color(0xFF3C4043)),
+      onPressed: onPressed,
     );
   }
 }

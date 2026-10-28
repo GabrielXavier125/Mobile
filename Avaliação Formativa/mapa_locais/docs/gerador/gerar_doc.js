@@ -107,6 +107,23 @@ function telaComTexto(rel, textoLegenda, paragrafos) {
   });
 }
 
+// Dois prints de celular lado a lado, cada um com legenda
+function duasTelas(rel1, leg1, rel2, leg2) {
+  const L = LARGURA / 2;
+  const coluna = (rel, leg) => new TableCell({
+    width: { size: L, type: WidthType.DXA }, borders: semBordas,
+    children: [
+      new Paragraph({ children: [new ImageRun({ type: 'png', data: img(rel), transformation: { width: 200, height: 444 } })], alignment: AlignmentType.CENTER }),
+      legenda(leg),
+    ],
+  });
+  return new Table({
+    width: { size: LARGURA, type: WidthType.DXA },
+    columnWidths: [L, L],
+    rows: [new TableRow({ cantSplit: true, children: [coluna(rel1, leg1), coluna(rel2, leg2)] })],
+  });
+}
+
 // ============================ CONTEÚDO ============================
 const capa = [
   new Paragraph({ children: [new TextRun({ text: 'SENAI — Avaliação Formativa', size: 26, color: '555555' })], alignment: AlignmentType.CENTER, spacing: { before: 600 } }),
@@ -180,9 +197,9 @@ const s3 = [
     p('Ponto de entrada do aplicativo (`screens/mapa_screen.dart`).', { alignment: AlignmentType.LEFT }),
     bullet('**Cidade selecionada:** o app abre em **Limeira**. Toque em "Limeira ▾" para escolher entre Limeira, São Paulo, Campinas e Jundiaí; o mapa se desloca para a cidade escolhida.'),
     bullet('**Pesquisa:** o campo "Buscar locais, endereços ou categorias…" abre a Tela 2 já filtrada pelo texto digitado e pela cidade.'),
-    bullet('**Mapa real:** imagens do OpenStreetMap com um filtro cinza claro, como no wireframe. O ponto azul representa a posição do usuário (simulada no centro da cidade).'),
-    bullet('**Marcadores:** um pino para cada local da cidade, com o ícone da categoria. Ao tocar, aparecem o nome do local e um cartão com avaliação, distância e "Ver detalhes".'),
-    bullet('**Botões laterais:** "Minha localização" recentraliza o mapa; "Camadas" alterna entre o mapa cinza e o colorido.'),
+    bullet('**Mapa real:** imagens do OpenStreetMap no estilo **Suave** (cores leves), com as opções **Colorido** e **Escuro** (modo noturno). O ponto azul pulsante representa a posição do usuário (simulada no centro da cidade).'),
+    bullet('**Marcadores:** um pino na cor da categoria para cada local, com o ícone num círculo branco. Ao tocar, o pino cresce, mostra um balão com o nome e um cartão com avaliação, distância e "Ver detalhes".'),
+    bullet('**Botões laterais:** zoom (+/−), "Minha localização" (recentraliza o mapa) e "Camadas" (abre o seletor de estilos).'),
     bullet('**Ver resultados (N):** abre a Tela 2 com os locais da cidade.'),
   ]),
   h2('3.2 Tela 2 — Resultados'),
@@ -351,9 +368,11 @@ const s4 = [
   h2('4.5 Mapa: OpenStreetMap'),
   bullet('O mapa usa o pacote `flutter_map`, que baixa as imagens ("tiles") de `tile.openstreetmap.org` por **HTTPS** e as monta conforme o zoom e a posição.'),
   bullet('As requisições se identificam com o nome do pacote do app (`userAgentPackageName`), como exige a política de uso do OpenStreetMap, e o mapa exibe a atribuição "OpenStreetMap contributors".'),
-  bullet('O estilo cinza do wireframe é obtido com um `ColorFilter` aplicado a cada imagem. O botão de camadas remove o filtro.'),
+  bullet('**Estilos:** o Suave e o Escuro são filtros de cor (`ColorFilter.matrix`) aplicados às imagens no próprio aparelho, sem outro servidor. O Suave reduz a saturação e clareia (parques verdes e água azul continuam visíveis); o Escuro inverte as cores e puxa para azul-marinho; o Colorido mostra o mapa original.'),
+  bullet('**Marcadores coloridos:** a cor e o ícone vêm do modelo `Categoria` (academia, restaurante, hospital, farmácia, mercado e café), o que ajuda a reconhecer o tipo de local de longe.'),
   bullet('Cada marcador é posicionado pela latitude e longitude gravadas no documento (`MarkerLayer`).'),
   bullet('Não é necessária chave de API. O Google Maps foi descartado porque exige uma conta de faturamento.'),
+  duasTelas('prints/mapa_seletor_estilo.png', 'Seletor de estilo do mapa', 'prints/mapa_escuro.png', 'Estilo Escuro (modo noturno)'),
   h2('4.6 Integrações com o Android'),
   tabela(['Recurso', 'Como funciona'], [
     ['Ligar', '`url_launcher` abre o discador com `tel:` e o número do local.'],

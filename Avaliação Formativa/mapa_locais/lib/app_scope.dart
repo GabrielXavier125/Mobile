@@ -11,6 +11,7 @@ class AppScope extends InheritedWidget {
     required this.service,
     required this.focoMapa,
     this.carregarTilesMapa = true,
+    this.animarMapa = true,
     required super.child,
   });
 
@@ -20,6 +21,10 @@ class AppScope extends InheritedWidget {
   /// Desligado nos testes automatizados, que não têm acesso à internet.
   final bool carregarTilesMapa;
 
+  /// Animação contínua do ponto do usuário. Desligada nos testes, porque uma
+  /// animação infinita impede o `pumpAndSettle` de terminar.
+  final bool animarMapa;
+
   static AppScope of(BuildContext context) {
     final scope = context.dependOnInheritedWidgetOfExactType<AppScope>();
     assert(scope != null, 'AppScope não encontrado na árvore de widgets.');
@@ -28,5 +33,7 @@ class AppScope extends InheritedWidget {
 
   @override
   bool updateShouldNotify(AppScope oldWidget) =>
-      service != oldWidget.service || carregarTilesMapa != oldWidget.carregarTilesMapa;
+      service != oldWidget.service ||
+      carregarTilesMapa != oldWidget.carregarTilesMapa ||
+      animarMapa != oldWidget.animarMapa;
 }
